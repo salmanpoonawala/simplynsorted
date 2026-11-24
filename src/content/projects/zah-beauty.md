@@ -11,6 +11,8 @@ homeTicker: true
 order: 2
 tint: '#E8E6FA'
 cover: ./zah-beauty.jpg
+video: /media/zah-beauty.mp4
+poster: /media/zah-beauty.jpg
 ---
 
 ## The brief
