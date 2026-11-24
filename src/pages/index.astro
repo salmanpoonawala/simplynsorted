@@ -22,7 +22,7 @@ const steps = [
   <section class="hero">
     <div class="container hero-inner">
       <p class="eyebrow">Websites · Software &amp; CRM · Performance marketing</p>
-      <h1>We build it. We grow it.<br />You get it <span class="accent">sorted.</span></h1>
+      <h1>We build it. We grow it.<br />You are <span class="accent">sorted.</span></h1>
       <p class="lead">
         One team for your website, your software and your marketing, so nothing falls through the cracks between
         agencies.
@@ -36,11 +36,23 @@ const steps = [
 
   <!-- Client strip -->
   <section aria-label="Some of our clients" class="clients">
-    <div class="container clients-inner">
-      <p class="eyebrow">Trusted by</p>
-      <ul>
-        {clients.map((c) => <li>{c}</li>)}
-      </ul>
+    <div class="ticker-label"><span>Trusted by</span></div>
+    <div class="ticker">
+      <div class="ticker-track">
+        <ul>
+          {clients.map((c) => <li>{c}</li>)}
+        </ul>
+        <!-- Extra copies make the loop seamless on wide screens; hidden from screen readers -->
+        {
+          [1, 2, 3].map(() => (
+            <ul aria-hidden="true">
+              {clients.map((c) => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -139,29 +151,94 @@ const steps = [
     margin-top: 8px;
   }
 
+  /* "Trusted by" news-style ticker */
   .clients {
-    border-block: 1px solid var(--line);
-  }
-  .clients-inner {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px 40px;
-    padding-block: 28px;
+    align-items: stretch;
+    border-block: 1px solid var(--line);
+    overflow: hidden;
   }
-  .clients ul {
+  .ticker-label {
+    flex: none;
+    display: flex;
+    align-items: center;
+    padding: 0 24px 0 var(--pad);
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+  .ticker {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    padding-block: 26px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 28s linear infinite;
+  }
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+  .ticker ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px 36px;
+    flex: none;
   }
-  .clients li {
-    font-size: 18px;
+  .ticker li {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    padding-right: 48px;
+    font-size: 20px;
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: var(--muted);
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .ticker li::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+  @keyframes ticker {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (max-width: 600px) {
+    .ticker-label {
+      padding: 0 14px;
+      font-size: 11px;
+    }
+    .ticker li {
+      font-size: 17px;
+      gap: 32px;
+      padding-right: 32px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+      animation: none;
+    }
+    .ticker {
+      overflow-x: auto;
+    }
   }
 
   .section-head em {

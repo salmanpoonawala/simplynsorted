@@ -2,7 +2,7 @@
 // Anything in [BRACKETS] is a placeholder waiting for real details.
 export const site = {
   name: 'Simply N Sorted',
-  tagline: 'We build it. We grow it. You get it sorted.',
+  tagline: 'We build it. We grow it. You are sorted.',
   description:
     'Simply N Sorted builds websites, custom software and CRMs, and runs performance and social media marketing — one team for building and growing your business online.',
   email: 'hello@simplynsorted.com', // TODO: confirm
