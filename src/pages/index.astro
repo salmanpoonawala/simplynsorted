@@ -1,0 +1,240 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import CTA from '../components/CTA.astro';
+import { serviceGroups } from '../data/services';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((p) => p.data.featured).slice(0, 3);
+const clients = projects.map((p) => p.data.client);
+
+const steps = [
+  { n: '01', title: 'Understand', text: 'We learn your business, your customers and what is getting in the way.' },
+  { n: '02', title: 'Build', text: 'We design and build the website, store or system you actually need.' },
+  { n: '03', title: 'Grow', text: 'We run the marketing that brings the right people to it.' },
+  { n: '04', title: 'Improve', text: 'We measure what works, report clearly and keep making it better.' },
+];
+---
+
+<Base>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow">Websites · Software &amp; CRM · Performance marketing</p>
+      <h1>We build it. We grow it.<br />You get it <span class="accent">sorted.</span></h1>
+      <p class="lead">
+        One team for your website, your software and your marketing, so nothing falls through the cracks between
+        agencies.
+      </p>
+      <div class="hero-actions">
+        <a href="/work/" class="btn btn--primary">See our work</a>
+        <a href="/contact/" class="btn btn--ghost">Book a call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client strip -->
+  <section aria-label="Some of our clients" class="clients">
+    <div class="container clients-inner">
+      <p class="eyebrow">Trusted by</p>
+      <ul>
+        {clients.map((c) => <li>{c}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Featured work -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Selected work</p>
+          <h2>Real projects for real businesses.</h2>
+        </div>
+        <a href="/work/" class="link-arrow">View all work <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="grid-3">
+        {featured.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Build + Grow -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">What we do</p>
+          <h2>Most agencies build <em>or</em> market. We do both.</h2>
+          <p class="lead">
+            When the people who built your website also run your ads, everything connects: tracking works, landing pages
+            convert, and you have one team to call.
+          </p>
+        </div>
+      </div>
+      <div class="split">
+        {
+          serviceGroups.map((g) => (
+            <div class="group">
+              <span class="tag">{g.label}</span>
+              <h3>{g.title}</h3>
+              <ul>
+                {g.items.map((s) => (
+                  <li>
+                    <strong>{s.name}</strong>
+                    <span>{s.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <p class="more"><a href="/services/" class="link-arrow">Explore services <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">How we work</p>
+          <h2>Simple process. Sorted results.</h2>
+        </div>
+      </div>
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li>
+              <span class="num">{s.n}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <CTA />
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(72px, 12vw, 150px) clamp(48px, 8vw, 96px);
+  }
+  .hero-inner {
+    display: grid;
+    gap: 24px;
+  }
+  .hero h1 {
+    max-width: 960px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .clients {
+    border-block: 1px solid var(--line);
+  }
+  .clients-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+    padding-block: 28px;
+  }
+  .clients ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 36px;
+  }
+  .clients li {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--muted);
+  }
+
+  .section-head em {
+    font-style: normal;
+    color: var(--accent-strong);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: 28px;
+  }
+  .group {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(28px, 4vw, 40px);
+    display: grid;
+    gap: 20px;
+    align-content: start;
+  }
+  .tag {
+    justify-self: start;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+  .group li {
+    display: grid;
+    gap: 4px;
+    padding-block: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .group li span {
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .more {
+    margin-top: 32px;
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 28px;
+  }
+  .steps li {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+  }
+  .num {
+    font-weight: 800;
+    color: var(--accent-strong);
+  }
+  .steps p {
+    color: var(--muted);
+    font-size: 16px;
+  }
+</style>

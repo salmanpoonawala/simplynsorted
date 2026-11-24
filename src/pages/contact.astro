@@ -1,0 +1,199 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const interests = ['Website', 'E-commerce store', 'Software / CRM', 'Performance marketing', 'Social media', 'Not sure yet'];
+---
+
+<Base title="Contact" description="Tell us about your project. We reply within one working day.">
+  <section class="section">
+    <div class="container layout">
+      <div class="side">
+        <p class="eyebrow">Contact</p>
+        <h1>Let's get it <span class="accent">sorted.</span></h1>
+        <p class="lead">Tell us a little about your business and what you need. We'll reply within one working day.</p>
+        <ul class="direct">
+          <li><span>Email</span><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          {site.whatsapp && <li><span>WhatsApp</span><a href={`https://wa.me/${site.whatsapp}`}>Chat with us</a></li>}
+          {!site.phone.startsWith('[') && <li><span>Phone</span><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></li>}
+          <li><span>Based in</span>{site.city}</li>
+        </ul>
+      </div>
+
+      <form class="form" action="/contact.php" method="post">
+        <p class="status" id="form-status" role="status" hidden></p>
+        <div class="row">
+          <label>Your name<input name="name" type="text" autocomplete="name" required maxlength="100" /></label>
+          <label>Company<input name="company" type="text" autocomplete="organization" maxlength="100" /></label>
+        </div>
+        <div class="row">
+          <label>Email<input name="email" type="email" autocomplete="email" required maxlength="150" /></label>
+          <label>Phone / WhatsApp<input name="phone" type="tel" autocomplete="tel" maxlength="30" /></label>
+        </div>
+        <fieldset>
+          <legend>What can we help with?</legend>
+          <div class="chips">
+            {
+              interests.map((i) => (
+                <label class="chip">
+                  <input type="checkbox" name="interest[]" value={i} />
+                  <span>{i}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+        <label>Tell us about your project<textarea name="message" rows="5" required maxlength="3000"></textarea></label>
+        <!-- Spam trap: real people never see or fill this -->
+        <label class="hp" aria-hidden="true">Leave empty<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+        <button type="submit" class="btn btn--primary">Send message</button>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const status = document.getElementById('form-status');
+  const params = new URLSearchParams(location.search);
+  if (status && params.has('error')) {
+    status.hidden = false;
+    status.textContent =
+      params.get('error') === 'invalid'
+        ? 'Please fill in your name, a valid email and a message.'
+        : 'Sorry, something went wrong sending your message. Please email us directly.';
+  }
+</script>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: clamp(40px, 6vw, 80px);
+    align-items: start;
+  }
+  .side {
+    display: grid;
+    gap: 20px;
+  }
+  .direct {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .direct li {
+    display: grid;
+    gap: 2px;
+    font-weight: 600;
+  }
+  .direct span {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .direct a {
+    text-decoration: none;
+  }
+  .direct a:hover {
+    color: var(--accent-ink);
+  }
+  .form {
+    display: grid;
+    gap: 20px;
+    padding: clamp(24px, 4vw, 40px);
+    border-radius: 28px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  label,
+  legend {
+    display: grid;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  input:not([type='checkbox']),
+  textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 400;
+  }
+  input:focus,
+  textarea:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  textarea {
+    resize: vertical;
+  }
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  legend {
+    margin-bottom: 10px;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    display: inline-flex;
+    position: relative;
+  }
+  .chip input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .chip span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    font-weight: 600;
+  }
+  .chip input:checked + span {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .chip input:focus-visible + span {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+  }
+  .form .btn {
+    justify-self: start;
+  }
+  .status {
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    background: #ffe3da;
+    color: #7a1f0b;
+    font-weight: 600;
+  }
+</style>

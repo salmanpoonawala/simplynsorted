@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import CTA from '../../components/CTA.astro';
+import { categories } from '../../data/site';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+// Only show filter buttons for categories that have at least one project.
+const used = categories.filter((c) => projects.some((p) => p.data.category === c));
+---
+
+<Base title="Our work" description="Websites, online stores, software and marketing we have delivered for our clients.">
+  <section class="section intro">
+    <div class="container">
+      <p class="eyebrow">Our work</p>
+      <h1>Work we're <span class="accent">proud</span> of.</h1>
+      <p class="lead">A selection of websites, stores, systems and campaigns we've built and run for our clients.</p>
+    </div>
+  </section>
+
+  <section class="section work">
+    <div class="container">
+      <div class="filters" role="group" aria-label="Filter projects by type">
+        <button type="button" class="filter" data-filter="all" aria-pressed="true">All</button>
+        {
+          used.map((c) => (
+            <button type="button" class="filter" data-filter={c} aria-pressed="false">
+              {c}
+            </button>
+          ))
+        }
+      </div>
+      <div class="grid-3" id="work-grid">
+        {projects.map((p) => <ProjectCard project={p} />)}
+      </div>
+      <p class="count" id="work-count" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <CTA />
+</Base>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter'));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('#work-grid [data-category]'));
+  const count = document.getElementById('work-count');
+
+  function apply(filter: string) {
+    let shown = 0;
+    cards.forEach((card) => {
+      const match = filter === 'all' || card.dataset.category === filter;
+      card.hidden = !match;
+      if (match) shown++;
+    });
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)));
+    if (count) count.textContent = `Showing ${shown} project${shown === 1 ? '' : 's'}`;
+  }
+
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter || 'all')));
+</script>
+
+<style>
+  .intro {
+    padding-bottom: 0;
+  }
+  .intro .container {
+    display: grid;
+    gap: 20px;
+  }
+  .work {
+    padding-top: 48px;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .filter {
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .filter:hover {
+    border-color: var(--ink);
+  }
+  .filter[aria-pressed='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .count {
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  :global([hidden]) {
+    display: none !important;
+  }
+</style>

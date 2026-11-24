@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import { serviceGroups } from '../data/services';
+---
+
+<Base title="Services" description="Websites, e-commerce, custom software and CRMs, performance marketing and social media — under one roof.">
+  <section class="section intro">
+    <div class="container">
+      <p class="eyebrow">Services</p>
+      <h1>Build and grow, <span class="accent">sorted.</span></h1>
+      <p class="lead">
+        Pick one service or let us handle the whole journey, from your first website to the campaigns that fill your
+        inbox.
+      </p>
+    </div>
+  </section>
+
+  {
+    serviceGroups.map((g, i) => (
+      <section class={`section ${i % 2 ? 'section--tint' : ''}`} id={g.id}>
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="tag">{g.label}</span>
+              <h2>{g.title}</h2>
+            </div>
+          </div>
+          <div class="grid-3">
+            {g.items.map((s) => (
+              <div class="service">
+                <h3>{s.name}</h3>
+                <p>{s.text}</p>
+                <ul>
+                  {s.points.map((pt) => (
+                    <li>{pt}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <CTA title="Not sure what you need?" text="Tell us where you are and where you want to be. We'll suggest the simplest way to get there." />
+</Base>
+
+<style>
+  .intro {
+    padding-bottom: 24px;
+  }
+  .intro .container {
+    display: grid;
+    gap: 20px;
+  }
+  .tag {
+    justify-self: start;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .service {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+    padding: 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .service p {
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .service ul {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .service li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .service li::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    flex: none;
+  }
+</style>

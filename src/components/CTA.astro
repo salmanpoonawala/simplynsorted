@@ -1,0 +1,76 @@
+---
+import { site } from '../data/site';
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = 'Got something that needs sorting?',
+  text = 'Tell us about your website, software or marketing. We will reply within one working day with honest next steps.',
+} = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class="cta">
+      <div class="copy">
+        <h2>{title}</h2>
+        <p>{text}</p>
+      </div>
+      <div class="actions">
+        <a href="/contact/" class="btn btn--primary">Start a project</a>
+        {
+          site.whatsapp ? (
+            <a href={`https://wa.me/${site.whatsapp}`} class="btn btn--light">WhatsApp us</a>
+          ) : (
+            <a href={`mailto:${site.email}`} class="btn btn--light">Email us</a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: clamp(36px, 6vw, 72px);
+    border-radius: 32px;
+    background: #1d1b4b;
+    color: #f5f4fb;
+  }
+  :global([data-theme='dark']) .cta {
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .copy {
+    display: grid;
+    gap: 16px;
+    max-width: 620px;
+  }
+  .copy p {
+    color: #c9c7e8;
+    font-size: 18px;
+  }
+  .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn--primary {
+    background: #ff8a6e;
+    color: #15143a;
+  }
+  .btn--light {
+    border-color: #f5f4fb;
+    color: #f5f4fb;
+  }
+  .btn--light:hover {
+    background: #f5f4fb;
+    color: #1d1b4b;
+  }
+</style>

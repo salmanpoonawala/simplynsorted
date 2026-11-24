@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found">
+  <section class="section">
+    <div class="container box">
+      <p class="eyebrow">404</p>
+      <h1>This page isn't <span class="accent">sorted</span> yet.</h1>
+      <p class="lead">The page you're looking for doesn't exist or has moved.</p>
+      <div><a href="/" class="btn btn--primary">Back to home</a></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .box {
+    display: grid;
+    gap: 20px;
+    min-height: 50vh;
+    align-content: center;
+  }
+</style>

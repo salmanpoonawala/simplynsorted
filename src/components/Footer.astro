@@ -1,0 +1,82 @@
+---
+import Logo from './Logo.astro';
+import { site, nav } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container cols">
+    <div class="brand">
+      <Logo size={28} />
+      <p>Websites, software, CRMs and marketing — one team, everything sorted.</p>
+    </div>
+    <nav aria-label="Footer">
+      <p class="eyebrow">Explore</p>
+      <ul>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <div>
+      <p class="eyebrow">Get in touch</p>
+      <ul>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        {site.whatsapp && <li><a href={`https://wa.me/${site.whatsapp}`}>WhatsApp us</a></li>}
+        {site.social.instagram && <li><a href={site.social.instagram}>Instagram</a></li>}
+        {site.social.linkedin && <li><a href={site.social.linkedin}>LinkedIn</a></li>}
+        <li>{site.city}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="container legal">
+    <p>© {year} {site.name}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    padding-top: 64px;
+    font-size: 15px;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+  }
+  .brand {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+  }
+  .brand p {
+    color: var(--muted);
+    max-width: 340px;
+  }
+  ul {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    color: var(--muted);
+  }
+  a {
+    text-decoration: none;
+    color: var(--muted);
+  }
+  a:hover {
+    color: var(--ink);
+  }
+  .legal {
+    margin-top: 56px;
+    padding-block: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+  }
+  @media (max-width: 760px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

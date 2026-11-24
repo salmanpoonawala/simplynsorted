@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+
+const values = [
+  { title: 'Simple over clever', text: 'We explain things plainly and build what you need — no jargon, no bloat.' },
+  { title: 'One team, end to end', text: 'The people who build your site also understand your marketing, so nothing gets lost in handovers.' },
+  { title: 'Results you can see', text: 'We track what matters — enquiries, sales, time saved — and report it honestly.' },
+  { title: 'In it for the long run', text: 'Launch is the start, not the end. We stay on to keep improving what we build.' },
+];
+---
+
+<Base title="About" description="Simply N Sorted is a digital team that builds websites, software and CRMs, and runs marketing that grows them.">
+  <section class="section intro">
+    <div class="container">
+      <p class="eyebrow">About us</p>
+      <h1>We make digital <span class="accent">simple.</span></h1>
+      <p class="lead">
+        Simply N Sorted started with one idea: businesses shouldn't need one agency for their website, another for
+        their software and a third for their marketing. So we brought all three together.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container story">
+      <div>
+        <p class="eyebrow">Our story</p>
+        <h2>Why "Simply N Sorted"?</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Most of our clients come to us with something messy: an outdated website, leads tracked in spreadsheets, or ad
+          spend with no clear return. Our job is to take that and sort it out — simply.
+        </p>
+        <!-- TODO: add your founding year, founder names and a line about the team. -->
+        <p>
+          Today we work with real estate firms, beauty and wellness brands, financial advisors, internet providers and
+          more, building the systems they run on and the marketing that grows them.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head"><div><p class="eyebrow">What we believe</p><h2>How we work with you.</h2></div></div>
+      <div class="values">
+        {
+          values.map((v) => (
+            <div>
+              <h3>{v.title}</h3>
+              <p>{v.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</Base>
+
+<style>
+  .intro {
+    padding-bottom: 64px;
+  }
+  .intro .container {
+    display: grid;
+    gap: 20px;
+  }
+  .story {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+    gap: 40px;
+  }
+  .story > div:first-child {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+  .story .prose p {
+    font-size: 18px;
+  }
+  .values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 28px;
+  }
+  .values div {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding-top: 24px;
+    border-top: 2px solid var(--accent);
+  }
+  .values p {
+    color: var(--muted);
+    font-size: 16px;
+  }
+</style>
