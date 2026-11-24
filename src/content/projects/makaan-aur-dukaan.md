@@ -10,6 +10,8 @@ featured: true
 homeTicker: true
 order: 1
 tint: '#FFE3DA'
+video: /media/makaan-aur-dukaan.mp4
+poster: /media/makaan-aur-dukaan.jpg
 # results:
 #   - { value: '[NUMBER]', label: '[WHAT IT MEASURES]' }
 ---
