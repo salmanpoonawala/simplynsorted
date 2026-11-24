@@ -17,7 +17,7 @@ One-time setup in GitHub → **Settings → Secrets and variables → Actions**:
 | `FTP_USERNAME` | FTP username |
 | `FTP_PASSWORD` | FTP password |
 
-If the site should go somewhere other than `public_html/`, add a **variable** (not secret) `FTP_SERVER_DIR`, e.g. `public_html/new/`.
+Files upload to the FTP account's home folder, which on this Globehost account is the website root. To upload somewhere else, add a **variable** (not secret) `FTP_SERVER_DIR`, e.g. `staging/`.
 
 ## Common edits
 

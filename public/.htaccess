@@ -1,5 +1,8 @@
 # Apache settings for Globehost shared hosting
 
+# Serve our index.html before any old index.php left by the host
+DirectoryIndex index.html index.php
+
 ErrorDocument 404 /404.html
 
 # Force HTTPS — remove the # from the 4 lines below once SSL is active on the domain
