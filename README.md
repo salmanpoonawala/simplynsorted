@@ -34,6 +34,8 @@ Files upload to the FTP account's home folder, which on this Globehost account i
 1. Copy any file in `src/content/projects/` and rename it, e.g. `new-client.md` (this becomes `/work/new-client/`).
 2. Edit the details at the top (title, client, category, summary, url…).
 3. Optional screenshot: put `new-client.png` in the same folder and add `cover: ./new-client.png`.
+   Or, to show animation/parallax: put a short scroll-through video in `public/media/` (MP4, ideally under 3 MB)
+   and add `video: /media/new-client.mp4` (plus optional `poster: /media/new-client.jpg`). Video takes priority over cover.
 4. Optional results: add
    ```yaml
    results:

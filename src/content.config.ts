@@ -21,6 +21,11 @@ const projects = defineCollection({
       tint: z.string().default('#F5F4FB'),
       // Optional screenshot: put the file next to the .md and reference it, e.g. ./makaan.png
       cover: image().optional(),
+      // Optional scroll-through video to show animation/parallax.
+      // Put files in public/media/ and reference them as '/media/name.mp4'.
+      video: z.string().optional(),
+      // Still frame shown before the video loads, e.g. '/media/name.jpg'
+      poster: z.string().optional(),
       results: z
         .array(z.object({ value: z.string(), label: z.string() }))
         .default([]),
