@@ -10,6 +10,7 @@ featured: true
 homeTicker: true
 order: 3
 tint: '#DDF1EC'
+cover: ./zah-salon.jpg
 ---
 
 ## The brief

@@ -10,6 +10,7 @@ featured: true
 homeTicker: true
 order: 2
 tint: '#E8E6FA'
+cover: ./zah-beauty.jpg
 ---
 
 ## The brief
