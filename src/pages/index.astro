@@ -7,7 +7,7 @@ import { serviceGroups } from '../data/services';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const featured = projects.filter((p) => p.data.featured).slice(0, 3);
-const clients = projects.map((p) => p.data.client);
+const clients = projects.filter((p) => p.data.homeTicker).map((p) => p.data.client);
 
 const steps = [
   { n: '01', title: 'Understand', text: 'We learn your business, your customers and what is getting in the way.' },

@@ -7,6 +7,7 @@ services: [Website design, Development, Lead capture]
 summary: A conversion-led website for a Mumbai ISP selling leased lines, business broadband and event bandwidth across five cities.
 url: https://ringnetworks.in
 order: 5
+homeTicker: true
 tint: '#DCEBFF'
 ---
 

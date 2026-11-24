@@ -7,6 +7,7 @@ services: [Website design, Development]
 summary: A soft, spa-like website for a salon brand with locations in Mumbai, Goa, Bangalore and Dubai.
 url: https://zahsalon.com
 featured: true
+homeTicker: true
 order: 3
 tint: '#DDF1EC'
 ---

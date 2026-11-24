@@ -7,6 +7,7 @@ services: [Website design, Development, Content structure]
 summary: A clean, easy-to-navigate site for a tax and financial advisory firm serving startups, companies and individual taxpayers.
 url: https://taxancy.com
 order: 4
+homeTicker: true
 tint: '#FFF1CC'
 ---
 

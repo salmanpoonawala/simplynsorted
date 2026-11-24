@@ -16,6 +16,8 @@ const projects = defineCollection({
       url: z.string().url().optional(),
       year: z.number().optional(),
       featured: z.boolean().default(false),
+      // Show this client's name in the homepage "Trusted by" ticker
+      homeTicker: z.boolean().default(false),
       order: z.number().default(100),
       // Card colour used until a real screenshot is added.
       tint: z.string().default('#F5F4FB'),
