@@ -7,6 +7,7 @@ services: [Website design, Development, Content structure]
 summary: An editorial, understated website for a Mumbai real estate firm working across ultra-luxury homes, commercial leasing and investments.
 url: https://www.makaanaurdukaan.com
 featured: true
+featuredOrder: 1
 homeTicker: true
 order: 1
 tint: '#FFE3DA'

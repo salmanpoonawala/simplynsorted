@@ -6,7 +6,10 @@ import CTA from '../components/CTA.astro';
 import { serviceGroups } from '../data/services';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const featured = projects.filter((p) => p.data.featured).slice(0, 3);
+const featured = projects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => (a.data.featuredOrder ?? a.data.order) - (b.data.featuredOrder ?? b.data.order))
+  .slice(0, 3);
 const clients = projects.filter((p) => p.data.homeTicker).map((p) => p.data.client);
 
 const steps = [

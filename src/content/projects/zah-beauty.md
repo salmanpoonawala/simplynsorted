@@ -7,6 +7,7 @@ services: [E-commerce store, Website design, Development]
 summary: A bright, playful online store for a beauty brand selling across India and the UAE, built to make shopping by concern quick and fun.
 url: https://www.zahbeauty.com
 featured: true
+featuredOrder: 2
 homeTicker: true
 order: 2
 tint: '#E8E6FA'
