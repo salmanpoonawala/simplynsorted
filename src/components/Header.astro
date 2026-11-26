@@ -1,4 +1,5 @@
 ---
+import { url } from '../utils/url';
 import Logo from './Logo.astro';
 import { nav } from '../data/site';
 const path = Astro.url.pathname;
@@ -6,17 +7,17 @@ const path = Astro.url.pathname;
 
 <header class="header">
   <div class="container bar">
-    <a href="/" class="home" aria-label="Simply N Sorted home"><Logo size={24} /></a>
+    <a href={url("/")} class="home" aria-label="Simply N Sorted home"><Logo size={24} /></a>
 
     <nav aria-label="Main" class="nav" id="site-nav">
       {
         nav.map((item) => (
-          <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+          <a href={url(item.href)} aria-current={path.startsWith(url(item.href)) ? 'page' : undefined}>
             {item.label}
           </a>
         ))
       }
-      <a href="/contact/" class="btn btn--primary nav-cta">Book a call</a>
+      <a href={url("/contact/")} class="btn btn--primary nav-cta">Book a call</a>
     </nav>
 
     <div class="tools">

@@ -6,14 +6,18 @@ $to       = 'hello@simplynsorted.com';
 $from     = 'website@simplynsorted.com';
 $subjectPrefix = 'New enquiry from simplynsorted.com';
 
+// Folder this script lives in ('' on the live site, '/test' on the preview site),
+// so redirects stay inside the same copy of the website.
+$base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/');
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /contact/');
+    header('Location: ' . $base . '/contact/');
     exit;
 }
 
 // Spam trap: bots fill hidden fields, people don't.
 if (!empty($_POST['website'])) {
-    header('Location: /thank-you/');
+    header('Location: ' . $base . '/thank-you/');
     exit;
 }
 
@@ -36,7 +40,7 @@ if (!empty($_POST['interest']) && is_array($_POST['interest'])) {
 }
 
 if ($name === '' || $message === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Location: /contact/?error=invalid');
+    header('Location: ' . $base . '/contact/?error=invalid');
     exit;
 }
 
@@ -54,5 +58,5 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $subject = "$subjectPrefix: $name" . ($company ? " ($company)" : '');
 $ok = mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers);
 
-header('Location: ' . ($ok ? '/thank-you/' : '/contact/?error=send'));
+header('Location: ' . $base . ($ok ? '/thank-you/' : '/contact/?error=send'));
 exit;

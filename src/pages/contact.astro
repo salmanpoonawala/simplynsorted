@@ -1,4 +1,5 @@
 ---
+import { url } from '../utils/url';
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 
@@ -20,7 +21,7 @@ const interests = ['Website', 'E-commerce store', 'Software / CRM', 'Performance
         </ul>
       </div>
 
-      <form class="form" action="/contact.php" method="post">
+      <form class="form" action={url("/contact.php")} method="post">
         <p class="status" id="form-status" role="status" hidden></p>
         <div class="row">
           <label>Your name<input name="name" type="text" autocomplete="name" required maxlength="100" /></label>

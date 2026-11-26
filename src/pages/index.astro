@@ -1,4 +1,5 @@
 ---
+import { url } from '../utils/url';
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -31,8 +32,8 @@ const steps = [
         agencies.
       </p>
       <div class="hero-actions">
-        <a href="/work/" class="btn btn--primary">See our work</a>
-        <a href="/contact/" class="btn btn--ghost">Book a call</a>
+        <a href={url("/work/")} class="btn btn--primary">See our work</a>
+        <a href={url("/contact/")} class="btn btn--ghost">Book a call</a>
       </div>
     </div>
   </section>
@@ -67,7 +68,7 @@ const steps = [
           <p class="eyebrow">Selected work</p>
           <h2>Real projects for real businesses.</h2>
         </div>
-        <a href="/work/" class="link-arrow">View all work <span aria-hidden="true">→</span></a>
+        <a href={url("/work/")} class="link-arrow">View all work <span aria-hidden="true">→</span></a>
       </div>
       <div class="grid-3">
         {featured.map((p) => <ProjectCard project={p} />)}
@@ -106,7 +107,7 @@ const steps = [
           ))
         }
       </div>
-      <p class="more"><a href="/services/" class="link-arrow">Explore services <span aria-hidden="true">→</span></a></p>
+      <p class="more"><a href={url("/services/")} class="link-arrow">Explore services <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 

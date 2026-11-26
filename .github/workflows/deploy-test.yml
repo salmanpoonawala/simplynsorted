@@ -1,0 +1,69 @@
+# Preview site: builds the `test` branch and uploads it to the /test/ folder
+# (e.g. https://www.simplynsorted.com/test/). The live site at the domain root
+# is never touched by this workflow — that is deploy.yml, which only runs for `main`.
+#
+# Uses the same repository secrets as the live deploy:
+#   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
+# Optional repository variable TEST_FTP_SERVER_DIR (default: test/ — relative to the
+# FTP account's home, which on this Globehost account is the website root).
+
+name: Build & deploy preview (/test/)
+
+on:
+  push:
+    branches: [test]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-test
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build for the /test/ folder
+        run: npm run build
+        env:
+          BASE_PATH: /test
+
+      - name: Keep the preview out of search engines
+        run: |
+          cat > dist/.htaccess <<'EOF'
+          <IfModule mod_headers.c>
+            Header set X-Robots-Tag "noindex, nofollow"
+          </IfModule>
+          ErrorDocument 404 /test/404.html
+          EOF
+
+      - name: Check FTP secrets are set
+        id: secrets
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        run: |
+          if [ -z "$FTP_SERVER" ]; then
+            echo "FTP secrets not set yet — skipping upload. The build itself passed."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload to Globehost /test/ via FTP
+        if: steps.secrets.outputs.ready == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          # Sub-folder of the website root. Only files inside it are ever changed.
+          server-dir: ${{ vars.TEST_FTP_SERVER_DIR || 'test/' }}

@@ -1,4 +1,5 @@
 ---
+import { url } from '../utils/url';
 import Base from '../layouts/Base.astro';
 ---
 
@@ -8,7 +9,7 @@ import Base from '../layouts/Base.astro';
       <p class="eyebrow">Message sent</p>
       <h1>Thanks! Consider it <span class="accent">sorted.</span></h1>
       <p class="lead">We've got your message and will reply within one working day.</p>
-      <div><a href="/work/" class="btn btn--ghost">Browse our work meanwhile</a></div>
+      <div><a href={url("/work/")} class="btn btn--ghost">Browse our work meanwhile</a></div>
     </div>
   </section>
 </Base>
