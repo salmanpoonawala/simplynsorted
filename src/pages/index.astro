@@ -24,19 +24,31 @@ const steps = [
 <Base>
   <!-- Hero -->
   <section class="hero">
-    <div class="container hero-inner">
-      <p class="eyebrow">Websites · Software &amp; CRM · Performance marketing</p>
-      <h1>We build it. We grow it.<br />You are <span class="accent">sorted.</span></h1>
-      <p class="lead">
-        One team for your website, your software and your marketing, so nothing falls through the cracks between
-        agencies.
-      </p>
-      <div class="hero-actions">
-        <a href={url("/work/")} class="btn btn--primary">See our work</a>
-        <a href={url("/contact/")} class="btn btn--ghost">Book a call</a>
+    <div class="container hero-grid">
+      <div class="hero-inner" data-hero>
+        <p class="eyebrow">Websites · Software &amp; CRM · Performance marketing</p>
+        <h1>We build it.<br />We grow it.<br />You are <span class="accent">sorted.</span></h1>
+        <p class="lead">
+          One team for your website, your software and your marketing, so nothing falls through the cracks between
+          agencies.
+        </p>
+        <div class="hero-actions">
+          <a href={url("/work/")} class="btn btn--primary" data-magnetic>See our work</a>
+          <a href={url("/contact/")} class="btn btn--ghost" data-magnetic>Book a call</a>
+        </div>
+      </div>
+      <!-- Scattered tiles that snap into a sorted grid (drawn by src/scripts/hero-tiles.ts) -->
+      <div class="hero-visual" aria-hidden="true">
+        <canvas id="hero-tiles"></canvas>
       </div>
     </div>
   </section>
+
+  <script>
+    import { heroTiles } from '../scripts/hero-tiles';
+    const c = document.getElementById('hero-tiles');
+    if (c instanceof HTMLCanvasElement) heroTiles(c);
+  </script>
 
   <!-- Client strip -->
   <section aria-label="Some of our clients" class="clients">
@@ -70,7 +82,7 @@ const steps = [
         </div>
         <a href={url("/work/")} class="link-arrow">View all work <span aria-hidden="true">→</span></a>
       </div>
-      <div class="grid-3">
+      <div class="grid-3" data-stagger>
         {featured.map((p) => <ProjectCard project={p} />)}
       </div>
     </div>
@@ -141,12 +153,40 @@ const steps = [
   .hero {
     padding-block: clamp(72px, 12vw, 150px) clamp(48px, 8vw, 96px);
   }
+  .hero {
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
   .hero-inner {
     display: grid;
     gap: 24px;
   }
   .hero h1 {
     max-width: 960px;
+  }
+  .hero-visual {
+    height: clamp(240px, 62vw, 340px);
+  }
+  .hero-visual canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: pan-y;
+  }
+  @media (min-width: 980px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 56px;
+    }
+    .hero-visual {
+      height: auto;
+      aspect-ratio: 7 / 8;
+      max-height: 560px;
+    }
   }
   .hero-actions {
     display: flex;
@@ -304,13 +344,28 @@ const steps = [
     gap: 28px;
   }
   .steps li {
+    position: relative;
     display: grid;
     gap: 10px;
     align-content: start;
     padding-top: 24px;
     border-top: 2px solid var(--ink);
   }
+  /* Coral line drawn over the top border as you scroll (--draw goes 0 → 1) */
+  .steps li::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(var(--draw, 0));
+    transform-origin: 0 50%;
+  }
   .num {
+    display: inline-block;
+    justify-self: start;
     font-weight: 800;
     color: var(--accent-strong);
   }

@@ -19,6 +19,23 @@ One-time setup in GitHub → **Settings → Secrets and variables → Actions**:
 
 Files upload to the FTP account's home folder, which on this Globehost account is the website root. To upload somewhere else, add a **variable** (not secret) `FTP_SERVER_DIR`, e.g. `staging/`.
 
+## Preview site (`test` branch → `/test/`)
+
+```
+push to test  →  GitHub Actions builds with BASE_PATH=/test  →  uploads to the test/ folder
+```
+
+The preview lives at `https://www.simplynsorted.com/test/` and never touches the live site.
+It uses the same FTP secrets. Preview pages are marked `noindex` so Google ignores them.
+When it is approved, merge `test` into `main` and the live site updates as usual.
+In code, write internal links as `href={url('/page/')}` (from `src/utils/url.ts`) so they work in both places.
+
+## Motion
+
+Animations live in `src/scripts/motion.ts` (site-wide) and `src/scripts/hero-tiles.ts` (homepage hero),
+using GSAP + ScrollTrigger and Lenis smooth scrolling. They read the theme colours from `global.css`,
+so light/dark mode just works. Visitors with "reduce motion" turned on get the static site.
+
 ## Common edits
 
 | To change… | Edit |

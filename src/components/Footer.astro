@@ -31,6 +31,8 @@ const year = new Date().getFullYear();
   <div class="container legal">
     <p>© {year} {site.name}. All rights reserved.</p>
   </div>
+  <!-- Big outlined name that fills with coral as you reach the end (motion.ts) -->
+  <div class="wordmark" aria-hidden="true">{site.name}<span class="fill">{site.name}</span></div>
 </footer>
 
 <style>
@@ -67,6 +69,37 @@ const year = new Date().getFullYear();
   }
   a:hover {
     color: var(--ink);
+  }
+  .footer {
+    overflow: hidden;
+  }
+  .wordmark {
+    position: relative;
+    padding: 0 var(--pad) 0.22em;
+    font-size: clamp(44px, 12.4vw, 190px);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+    white-space: nowrap;
+    text-align: center;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--line);
+    user-select: none;
+  }
+  .wordmark .fill {
+    position: absolute;
+    inset: 0;
+    padding: inherit;
+    color: var(--accent);
+    -webkit-text-stroke: 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  /* Without motion, just show it filled */
+  :global(html:not(.motion)) .wordmark .fill {
+    clip-path: none !important;
   }
   .legal {
     margin-top: 56px;

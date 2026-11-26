@@ -252,3 +252,59 @@ p {
     transition: none !important;
   }
 }
+
+/* ---------- Motion ----------
+   Used by src/scripts/motion.ts. Everything here reads the theme variables,
+   so light and dark mode both work without extra rules. */
+
+/* Smooth scrolling (Lenis) takes over from the browser's own */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Thin coral bar along the top that fills as you scroll */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+html:not(.motion) .scroll-progress {
+  display: none;
+}
+
+/* Word masks for heading reveals */
+.w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders (g, y) inside the mask */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.w > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* The hero stays hidden for a split second until its intro starts, so it never flickers */
+.motion [data-hero] {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+}

@@ -44,16 +44,29 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         } catch (e) {}
         if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         document.documentElement.dataset.theme = t;
+        // Motion is on unless the visitor asked for reduced motion. If the motion
+        // script fails to start, show everything after a moment anyway.
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          var r = document.documentElement;
+          r.classList.add('motion');
+          setTimeout(function () {
+            if (!r.classList.contains('motion-ready')) r.classList.remove('motion');
+          }, 3000);
+        }
       })();
     </script>
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <a class="skip" href="#main">Skip to content</a>
     <Header />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <script>
+      import '../scripts/motion';
+    </script>
     <style>
       .skip {
         position: absolute;

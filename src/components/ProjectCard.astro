@@ -10,7 +10,7 @@ const { project } = Astro.props;
 const p = project.data;
 ---
 
-<article class="card" data-category={p.category}>
+<article class="card" data-category={p.category} data-tilt>
   <a href={url(`/work/${project.id}/`)} class="cover" style={`--tint:${p.tint}`} aria-label={`${p.title} case study`}>
     {
       p.video ? (
@@ -76,7 +76,21 @@ const p = project.data;
     gap: 14px;
     align-content: start;
   }
+  /* Soft coral glow that follows the mouse (position set by motion.ts) */
+  .cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .card:hover .cover::after {
+    opacity: 1;
+  }
   .cover {
+    position: relative;
     display: block;
     /* Wide, like a desktop browser window, so scroll videos show their full width */
     aspect-ratio: 2 / 1;

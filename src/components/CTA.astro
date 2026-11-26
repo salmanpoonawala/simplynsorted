@@ -19,12 +19,12 @@ const {
         <p>{text}</p>
       </div>
       <div class="actions">
-        <a href={url("/contact/")} class="btn btn--primary">Start a project</a>
+        <a href={url("/contact/")} class="btn btn--primary" data-magnetic>Start a project</a>
         {
           site.whatsapp ? (
-            <a href={`https://wa.me/${site.whatsapp}`} class="btn btn--light">WhatsApp us</a>
+            <a href={`https://wa.me/${site.whatsapp}`} class="btn btn--light" data-magnetic>WhatsApp us</a>
           ) : (
-            <a href={`mailto:${site.email}`} class="btn btn--light">Email us</a>
+            <a href={`mailto:${site.email}`} class="btn btn--light" data-magnetic>Email us</a>
           )
         }
       </div>
